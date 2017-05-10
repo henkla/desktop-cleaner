@@ -1,7 +1,8 @@
 #!/bin/bash
 
-
-# Created by Henrik Larsson 2017: lthlarsson@gmail.com
+# DESKTOP CLEANER v 1.0
+# ---
+# Created by Henrik Larsson 2017: latohela@gmail.com
 # ---
 # INFORMATION
 # Run script to clean desktop. All files and directories on the user desktop
