@@ -36,8 +36,10 @@ TARGET="$HOME/$DIR"
 # path to users directory
 SOURCE=$(xdg-user-dir DESKTOP)  
 
+# keep track of how many files there are on desktop
 FILES_IN_DESKTOP=$(find $SOURCE -type f | wc -l)
 
+# if there aren' tany files on desktop - quit graciously
 if [ "$FILES_IN_DESKTOP" -lt 2 ]; then
   echo "No files to move from desktop. Aborting."
   exit 0
@@ -51,6 +53,7 @@ fi
 # move the actual files
 mv --backup=t $SOURCE/* $TARGET
 
+# print process status to user
 echo "$(($FILES_IN_DESKTOP-1)) file(s) from desktop has been moved to $TARGET."
 echo "Size of $DIR: $(find $TARGET -type f | wc -l) file(s) ($(du -sh $TARGET | awk '{print $1}'))"
 
