@@ -27,19 +27,31 @@
 #    desktop is done really fast and easy.
 
 
-# SETTINGS
-ENDDIR=".old-desktop-files"			# name of directory to store files in
-TARGET="$HOME/$ENDDIR"					# path to location to store files in
-SOURCE=$(xdg-user-dir DESKTOP)	# path to users directory
+# name of directory to store files in
+DIR=".old-desktop-files"        
 
-# IF TARGET DOESN'T EXIST - CREATE IT
-if [[ ! -d $TARGET ]]; then
+# path to location to store files in
+TARGET="$HOME/$DIR"             
 
-	mkdir $TARGET
+# path to users directory
+SOURCE=$(xdg-user-dir DESKTOP)  
 
+FILES_IN_DESKTOP=$(find $SOURCE -type f | wc -l)
+
+if [ "$FILES_IN_DESKTOP" -lt 2 ]; then
+  echo "No files to move from desktop. Aborting."
+  exit 0
 fi
 
-# MOVE ALL ON DESKTOP TO THE TARGET LOCATION
+# if target doesn't exist - create it
+if [[ ! -d $TARGET ]]; then
+  mkdir $TARGET
+fi
+
+# move the actual files
 mv --backup=t $SOURCE/* $TARGET
+
+echo "$(($FILES_IN_DESKTOP-1)) file(s) from desktop has been moved to $TARGET."
+echo "Size of $DIR: $(find $TARGET -type f | wc -l) file(s) ($(du -sh $TARGET | awk '{print $1}'))"
 
 exit 0
